@@ -10,6 +10,7 @@ contract FaucetERC20 is Ownable {
 
     mapping(address => mapping(address => uint256)) public faucetLastOf;
     uint256 public faucetAmount = 100;
+    uint256 public limitTime = 600; //as seconds
     event Faucet(
         address indexed sender,
         address indexed token,
@@ -25,5 +26,15 @@ contract FaucetERC20 is Ownable {
         t.transfer(to, amount);
         emit Faucet(msg.sender, token, to, amount);
         return true;
+    }
+
+    function setFaucetAmount(uint256 a) external {
+        require(msg.sender == owner, "forbidden");
+        faucetAmount = a;
+    }
+
+    function setLimitTime(uint256 t) external {
+        require(msg.sender == owner, "forbidden");
+        limitTime = t;
     }
 }
