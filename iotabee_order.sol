@@ -34,4 +34,9 @@ contract IotabeeOrder is Ownable {
         token.transferFrom(msg.sender, pool, amount);
         emit Collect(account, amount);
     }
+
+    function setPool(address _pool) external {
+        require(msg.sender == owner, "forbidden");
+        pool = _pool;
+    }
 }
