@@ -1,21 +1,25 @@
 //SPDX-License-Identifier: UNLICENSED
 pragma solidity >=0.8.7;
 import "./interfaces/IERC20.sol";
-import "./ownable.sol";
 
-contract IotabeeOrder is Ownable {
+contract IotabeeOrder {
     address public pool;
     IERC20 public token;
     event Swap(
+        address indexed sender,
         bytes32 toCoin,
         bytes32 toAddr,
         uint256 amount,
         uint256 min_amount
     );
-    event Collect(bytes32 account, uint256 amount);
+    event Collect(
+        address indexed sender,
+        bytes32 coin,
+        bytes32 account,
+        uint256 amount
+    );
 
     constructor(address _token, address _pool) {
-        owner = msg.sender;
         token = IERC20(_token);
         pool = _pool;
     }
@@ -27,16 +31,15 @@ contract IotabeeOrder is Ownable {
         uint256 min_amount
     ) external {
         token.transferFrom(msg.sender, pool, amount);
-        emit Swap(toCoin, toAddr, amount, min_amount);
+        emit Swap(msg.sender, toCoin, toAddr, amount, min_amount);
     }
 
-    function collect(bytes32 account, uint256 amount) external {
+    function collect(
+        bytes32 coin,
+        bytes32 account,
+        uint256 amount
+    ) external {
         token.transferFrom(msg.sender, pool, amount);
-        emit Collect(account, amount);
-    }
-
-    function setPool(address _pool) external {
-        require(msg.sender == owner, "forbidden");
-        pool = _pool;
+        emit Collect(msg.sender, coin, account, amount);
     }
 }
