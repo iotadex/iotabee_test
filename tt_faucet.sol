@@ -2,7 +2,7 @@
 pragma solidity >=0.8.7;
 import "./interfaces/IERC20.sol";
 
-contract TokenERC20 is IERC20 {
+contract TestUSDT is IERC20 {
     string public override name = "Test USD";
     string public override symbol = "USDT";
     uint8 public override decimals = 6;
