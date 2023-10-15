@@ -3,9 +3,9 @@ pragma solidity >=0.8.7;
 import "./interfaces/IERC20.sol";
 
 contract TokenERC20 is IERC20 {
-    string public override name = "Test Token Faucet";
-    string public override symbol = "TT4";
-    uint8 public override decimals = 6;
+    string public override name = "Soon test token";
+    string public override symbol = "SOONtest";
+    uint8 public override decimals = 18;
     uint256 public override totalSupply;
     address public minter;
 
@@ -17,51 +17,46 @@ contract TokenERC20 is IERC20 {
     event Mint(address indexed sender, uint256 amount);
 
     // 这里是构造函数, 实例创建时候执行
-    constructor() {
-        totalSupply = 10000000000 * 10**uint256(decimals);
+    constructor(string memory _name, string memory _symbol, uint8 d) {
+        totalSupply = 10000000000 * (10 ** d);
         balanceOf[msg.sender] = totalSupply;
         minter = msg.sender;
+
+        name = _name;
+        symbol = _symbol;
+        decimals = d;
     }
 
     function mint(uint256 amount) public {
         require(minter == msg.sender);
+        totalSupply += amount;
         balanceOf[minter] += amount;
         emit Mint(msg.sender, amount);
     }
 
-    function _approve(
-        address owner,
-        address spender,
-        uint256 value
-    ) private {
+    function _approve(address owner, address spender, uint256 value) private {
         allowance[owner][spender] = value;
         emit Approval(owner, spender, value);
     }
 
-    function _transfer(
-        address from,
-        address to,
-        uint256 value
-    ) private {
+    function _transfer(address from, address to, uint256 value) private {
         balanceOf[from] -= value;
         balanceOf[to] += value;
         emit Transfer(from, to, value);
     }
 
-    function approve(address spender, uint256 value)
-        external
-        override
-        returns (bool)
-    {
+    function approve(
+        address spender,
+        uint256 value
+    ) external override returns (bool) {
         _approve(msg.sender, spender, value);
         return true;
     }
 
-    function transfer(address to, uint256 value)
-        external
-        override
-        returns (bool)
-    {
+    function transfer(
+        address to,
+        uint256 value
+    ) external override returns (bool) {
         _transfer(msg.sender, to, value);
         return true;
     }
@@ -90,8 +85,9 @@ contract TokenERC20 is IERC20 {
 
     function faucet(address to) external returns (bool) {
         require(block.timestamp > faucetLastOf[to] + 600, "time wait");
-        uint256 amount = faucetAmount * (10**decimals);
+        uint256 amount = faucetAmount * (10 ** decimals);
         balanceOf[to] += amount;
+        totalSupply += amount;
         faucetLastOf[to] = block.timestamp;
         emit Faucet(msg.sender, to, amount);
         return true;

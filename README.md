@@ -1,13 +1,14 @@
-# Sample Hardhat Project
+# Shimmer Test Evm
+USDT was Deployed to : 0xe3569F2091421b02cccbF734d335C7021217D3C8
+IotabeeOrder was Deployed to : 0x090Cb2a8fEc5F5D8D80edDca7f51977F4554d3c1
+# Shimmer main evm tokens
+SOONt1 was Deployed to : 0x1F8E35099025EE03c89872D80CBb082ce2aBF632
+TT1 was Deployed to : 0x3E3c8701EF91299F235B29535A28B94Ec02236E9
+TT2 was Deployed to : 0x0F6Fd00E015080E8D8180D263d1E82270D00F500
+TT3 was Deployed to : 0x7EF810B1D5d52136d8bAafd2cD173098886476a5
+TT4 was Deployed to : 0x0b8207346701F551E5384175ecc69381627361F2
+USDT was Deployed to : 0xa885FdE6825a07A6413CDAe511Fe446289C863FE
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
-
-Try running some of the following tasks:
-
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.js
-```
+# Shimmer mainnet evm order:
+USDT was Deployed to : 0x7F74bAd65247D3b5041B362f881c24b15F88ED46
+IotabeeOrder was Deployed to : 0x2365e072aF38Cbbf9491e2341F77526f0aaD244F
